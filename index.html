@@ -110,7 +110,7 @@
     socket.addEventListener('close', (event) => {
         socket.send("stop-evaluating");
         console.log('WebSocket connection closed');
-        document.getElementById('server-status').textContent = "Can't connect to server";
+        document.getElementById('server-status').textContent = "Can't connect to the server";
         let ele = document.getElementById('server-status-color');
         ele.classList.remove('green');
         ele.classList.remove('yellow');

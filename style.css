@@ -339,7 +339,6 @@ body {
     }
 }
 
-
 .server-status-container{
     padding-left: 15px;
     margin-top: 10px;
@@ -382,4 +381,13 @@ body {
     font-size:17px;
     color: white;
     font-weight: normal;
+}
+
+.copy-icon{
+    color:white;
+    cursor: pointer;
+}
+
+.copy-icon:hover{
+    color: blueviolet;
 }

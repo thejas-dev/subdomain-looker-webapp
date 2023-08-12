@@ -13,6 +13,9 @@
         <div class="alertBox" id="alertBox">
             <h1 class="alert-text">Please enter valid url and dont provide any protocals</h1>
         </div>
+        <div class="alertBox" id="copyAlertBox">
+            <h1 class="alert-text">Subdomains data copied to clipboard</h1>
+        </div>
         <header class="header">
             <div class="header-container">
                 <span>
@@ -33,17 +36,20 @@
                     <h1 id="server-status" class="server-status">Connecting to server...</h1>
                 </div>
                 <h3 class="sub-text">Subdomain seeker is a tool to find subdomains of domain with their status code.
-                    <br><br>Paste your target domain and let subdomain seeker automatically evaluates the domain with 3 lakhs+ subdomains
+                    <br><br>Write your target domain and let subdomain seeker automatically evaluates the domain with 3 lakhs+ subdomains
                 </h3>
             </div>
             
             <div class="main-card">
                 <div class="card-head">
                     <form onsubmit="handleSubmit(event)" class="input-container">
-                        <i id="icon" class="fa fa-search" style="color:white;font-size: 20px;" aria-hidden="true"></i>
+                        <i id="icon" class="fa fa-search" style="color:white;font-size: 20px;" 
+                        aria-hidden="true" onclick="handleSubmit()" ></i>
                         <input type="text" class="card-input" id="card-input"
                         style="font-family: Verdana, Geneva, Tahoma, sans-serif;" 
                         placeholder="Write domain here eg:- google.com"/>
+                        <i id="icon" class="fa fa-copy copy-icon" style="font-size: 20px;" 
+                        aria-hidden="true" onclick="copyEveryData()" ></i>
                     </form>
 
                 </div>
@@ -56,8 +62,9 @@
     </main>
 </body>
     <script>
-
+    let dataCopy = []
     const addDataToBody = async(data) => {
+        dataCopy.push(data);
         let cardItem = document.createElement('div'); //create card item
         cardItem.classList.add('card-item');
         cardItem.addEventListener('click',(event)=>copyThis(data.subdomain + " [" + data.response + "]"))
@@ -123,7 +130,9 @@
     }
 
     async function handleSubmit(e){
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+        }
         let ele = document.getElementById('card-input')
         let icon = document.getElementById('icon')
         value = ele.value;
@@ -145,10 +154,25 @@
     }
 
 
+    function copyEveryData(){
+        if(dataCopy.length > 1){
+            var tempTextarea = document.createElement('textarea');
+            tempTextarea.value = JSON.stringify(dataCopy, null, 2);
+            document.body.appendChild(tempTextarea);
 
+            tempTextarea.select();
+            document.execCommand('copy');
+
+            document.body.removeChild(tempTextarea);
+            let ele1 =  document.getElementById('copyAlertBox')
+            ele1.classList.add('show')
+            setTimeout(()=>{
+                ele1.classList.remove('show')
+            },3500)
+        }        
+    }
 
     function copyThis(data) {
-        event.stopPropagation();
 
         var tempTextarea = document.createElement('textarea');
         tempTextarea.value = data;

@@ -100,8 +100,14 @@
     const socket = new WebSocket(`wss://subdomain-seeker-tool.onrender.com/echo`); 
 
     socket.addEventListener('message', (event) => {
-        // console.log('Message from server:', event.data);
-        addDataToBody(JSON.parse(event.data));
+        const messageData = JSON.parse(event.data);
+
+        if (messageData === 'finished') {
+            console.log('Processing finished');
+            stopLoading();
+        } else {
+            addDataToBody(messageData);
+        }
     });
 
     socket.addEventListener('open', (event) => {
@@ -127,6 +133,16 @@
     function isValidDomain(input) {
         const domainPattern = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$/;
         return domainPattern.test(input);
+    }
+
+    function stopLoading() {
+        let ele = document.getElementById('card-input')
+        let icon = document.getElementById('icon')
+        ele.classList.remove('blurIt');
+        icon.classList.add('fa-search')
+        icon.classList.remove('fa-spinner');
+        icon.classList.remove('fa-pulse');
+        ele.disabled = false;
     }
 
     async function handleSubmit(e){

@@ -112,7 +112,7 @@
 
     socket.addEventListener('open', (event) => {
         console.log('Server connection opened.');
-        document.getElementById('server-status').textContent = "Server connected";
+        document.getElementById('server-status').textContent = "Connected to server";
         let ele = document.getElementById('server-status-color');
         ele.classList.remove('red');
         ele.classList.remove('yellow');
